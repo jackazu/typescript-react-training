@@ -7,12 +7,12 @@ type BoardProps = {
 }
 
 type BoardState = {
-  value: Array<string>;
+  squares: Array<string>;
 }
 
 class Board extends React.Component<BoardProps, BoardState> {
   state = {
-    value: Array(9).fill(''),
+    squares: Array(9).fill(''),
   };
 
   render() {
