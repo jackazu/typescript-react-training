@@ -22,24 +22,39 @@ class Board extends React.Component<BoardProps, BoardState> {
           <TableHead>{this.props.value}</TableHead>
           <TableBody>
             <TableRow>
-              <Square value={this.state.value[0]} />
-              <Square value={this.state.value[1]} />
-              <Square value={this.state.value[2]} />
+              {this.renderSquare(0)}
+              {this.renderSquare(1)}
+              {this.renderSquare(2)}
             </TableRow>
             <TableRow>
-              <Square value={this.state.value[3]} />
-              <Square value={this.state.value[4]} />
-              <Square value={this.state.value[5]} />
+              {this.renderSquare(3)}
+              {this.renderSquare(4)}
+              {this.renderSquare(5)}
             </TableRow>
             <TableRow>
-              <Square value={this.state.value[6]} />
-              <Square value={this.state.value[7]} />
-              <Square value={this.state.value[8]} />
+              {this.renderSquare(6)}
+              {this.renderSquare(7)}
+              {this.renderSquare(8)}
             </TableRow>
           </TableBody>
         </Table>
       </div>
     );
+  }
+
+  renderSquare = (index: number) => {
+    return (
+      <Square
+        value={this.state.squares[index]}
+        onClick={() => this.handleClick(index)}
+      />
+    );
+  }
+
+  handleClick = (index: number) => {
+    const squares = this.state.squares.slice();
+    squares[index] = 'X';
+    this.setState({ squares: squares });
   }
 }
 
