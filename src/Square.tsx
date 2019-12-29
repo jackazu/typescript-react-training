@@ -3,30 +3,18 @@ import { Button } from '@material-ui/core';
 
 type SquareProps = {
   value: string;
+  onClick: () => void;
 };
 
-type SquareState = {
-  value: string;
-}
-
-class Square extends React.Component<SquareProps, SquareState>{
-  constructor(props: Readonly<SquareProps>) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
-
-  render() {
-    return (
-      <Button
-        variant='outlined'
-        onClick={() => this.setState({ value: '○' })}
-      >
-        {this.state.value}
-      </Button>
-    );
-  }
+const Square = (props: SquareProps) => {
+  return (
+    <Button
+      variant='outlined'
+      onClick={props.onClick}
+    >
+      {props.value}
+    </Button>
+  );
 }
 
 export default Square;
