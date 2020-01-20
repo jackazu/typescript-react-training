@@ -50,7 +50,7 @@ class Board extends React.Component<BoardProps, BoardState> {
     );
   }
 
-  renderSquare = (index: number) => {
+  private renderSquare = (index: number) => {
     return (
       <Square
         value={this.state.squares[index]}
@@ -59,7 +59,7 @@ class Board extends React.Component<BoardProps, BoardState> {
     );
   }
 
-  handleClick = (index: number) => {
+  private handleClick = (index: number) => {
     const squares = this.state.squares.slice();
     if (squares[index]) {
       return;
