@@ -1,4 +1,4 @@
-import { Table, TableBody, TableRow, TableHead } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import Square from './Square';
 
@@ -8,18 +8,26 @@ type BoardProps = {
 
 type BoardState = {
   squares: Array<string>;
+  xIsNext: boolean;
 }
 
 class Board extends React.Component<BoardProps, BoardState> {
   state = {
     squares: Array(9).fill(''),
+    xIsNext: false,
   };
 
   render() {
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    status = winner
+      ? 'Winner: ' + winner
+      : 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+
     return (
       <div>
-        <Table>
-          <TableHead>{this.props.value}</TableHead>
+        <Table className='margin: auto'>
+          <TableHead>{status}</TableHead>
           <TableBody>
             <TableRow>
               {this.renderSquare(0)}
@@ -53,9 +61,32 @@ class Board extends React.Component<BoardProps, BoardState> {
 
   handleClick = (index: number) => {
     const squares = this.state.squares.slice();
-    squares[index] = 'X';
-    this.setState({ squares: squares });
+    if (squares[index]) {
+      return;
+    }
+    squares[index] = this.state.xIsNext ? 'X' : '◯';
+    this.setState({ squares: squares, xIsNext: !this.state.xIsNext });
   }
+}
+
+const calculateWinner = (squares: string[]) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
 }
 
 export default Board;
